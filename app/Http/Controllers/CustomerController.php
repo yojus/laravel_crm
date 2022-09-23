@@ -46,33 +46,10 @@ class CustomerController extends Controller
             $result = $zip_cloud->results[0];
             $address = $result->address1 . $result->address2 . $result->address3;
         } catch (\Throwable $th) {
-            $address = null;
+            return back()->withErrors(['error' => '郵便番号を正しく入力してください！']);
         }
 
         return view('customer.create')->with(compact('address', 'post_code'));
-
-        // {
-        //     $method = 'GET';
-        //     $zipcode = $request->post_code;
-        //     $url = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=' . $zipcode;
-
-        //     $client = new Client();
-        //     $response = $client->request($method, $url);
-        //     $body = $response->getBody();
-        //     $zip_cloud = json_decode($body, true);
-
-
-        //     if ($zip_cloud['status'] == 200) {
-        //         // 正常(status: 200)時の処理
-        //         $result = $zip_cloud['results'][0];
-        //         $address = $result['address1'] . $result['address2'] . $result['address3'];
-        //         $post_code = $result['zipcode'];
-        //         return view('customer.create')->with(compact('address', 'post_code'));
-        //     } else {
-        //         // エラー(statusが400,、または500)時の処理
-        //         return view('/customers/search', ['message' => $zip_cloud['message']]);
-        //     }
-        // }
     }
 
     /**

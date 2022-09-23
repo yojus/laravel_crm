@@ -10,6 +10,13 @@
 
 <body>
     <h1>郵便番号検索画面</h1>
+    @if (!empty($errors))
+        <div class="error">
+            @foreach ($errors->all() as $error)
+                <b>{{ $error }}</b>
+            @endforeach
+        </div>
+    @endif
     <form action="{{ route('customers.create') }}" method="GET">
         @csrf
         <label for="post_code">郵便番号検索</label>
